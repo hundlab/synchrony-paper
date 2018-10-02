@@ -37,7 +37,7 @@ s = re.compile('/')
 allSyncT = []
 allSyncV = []
 conns = []
-for i,folder in enumerate(glob('/home/dgratz/development/synchrony-paper/data/AllConnLogNormal/*/')):
+for i,folder in enumerate(glob('D:/synchrony-data/AllConnLogNormal/*/')):
 #    plt.figure(i)
 #    plt.title(s.split(folder)[-2])
     times,syncT,syncV=b2bSync(folder)

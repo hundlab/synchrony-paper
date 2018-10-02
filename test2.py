@@ -14,7 +14,7 @@ from scipy import signal
 from glob import glob
 import re
 
-folders = glob('/home/dgratz/development/synchrony-paper/data/AllConnLogNormal/*/')
+folders = glob('D:/synchrony-data/AllConnLogNormal/*/')
 s = re.compile('/')
 conns = []
 #avgCL = []

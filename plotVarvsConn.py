@@ -13,7 +13,7 @@ import matplotlib.pyplot as plt
 
 s = re.compile('/')
 u = re.compile('_')
-datadir = '/home/dgratz/development/synchrony-paper/data/AllConnAndRand/'
+datadir = 'D:/synchrony-data/AllConnAndRand/'
 conns = list(map(lambda x: float(s.split(x)[-1]), glob(datadir+'0/*')))
 data = np.zeros((2,26,20))
 

@@ -37,6 +37,7 @@ def addCells(cells):
         newCells.add((cell[0],cell[1]-1))
     return newCells.union(cells)
 
+#find the smallest manhat dist cells by bfs
 def smallestDistCells(cells):
     cellList = list(cells)
     cellsDists = [{c} for c in cellList]
@@ -50,9 +51,9 @@ def smallestDistCells(cells):
     return set(map(lambda x: tuple(x),pairs))
 
 def argmins(beatCells):
-    
+
     minVal = None
-    minsPos = [] 
+    minsPos = []
     for pos,elem in enumerate(nl):
         if minVal is None:
             minVal = elem
@@ -67,6 +68,54 @@ def tDiff(cs,times,poses):
     c1,c2 = cs
     return abs(times[poses.index(c1)]-times[poses.index(c2)])
 
+#find clusters
+def calcClusters(vVal,vTime,nextBeatDist=3,M=True):
+    tVals = np.concatenate(tuple(arr for col in vTime for arr in col))
+    vVals = np.concatenate(tuple(arr for col in vVal for arr in col))
+    badData = []
+    comp = None
+    if M:
+        comp = lambda a,b: a<b
+    else:
+        comp = lambda a,b: a>b
+    for i in range(len(vVals)):
+        if comp(vVals[i],0):
+            badData.append(i)
+    tVals = np.delete(tVals,badData)
+    vVals = np.delete(vVals,badData)
+    sortedPos = tVals.argsort()
+    tVals = tVals[sortedPos]
+    vVals = vVals[sortedPos]
+    cells = []
+    for rn,row in enumerate(vVal):
+        for cn,arr in enumerate(row):
+            cells += [(rn,cn)]*len(arr)
+    cells = [cells[ind] for ind in sortedPos]
+    beatLists = []
+    currentBeatSets = []
+    currentBeatLists = []
+    for i,cell in enumerate(cells):
+        removeCBS = None
+        potentials = []
+        for j,CBS in enumerate(currentBeatSets):
+            if cell in CBS:
+                removeCBS = j
+            elif any(map(lambda c: manhatDist((cell,c)) <= nextBeatDist,CBS)):
+                potentials.append((j,len(currentBeatSets[j])))
+        ML = max(potentials,key=lambda x: x[1]) if len(potentials) > 0 else None
+        if ML is not None:
+            currentBeatSets[ML[0]].add(cell)
+            currentBeatLists[ML[0]].append(i)
+        else:
+            currentBeatSets.append(set([cell]))
+            currentBeatLists.append([i])
+        if removeCBS is not None:
+            beatLists.append(currentBeatLists[removeCBS])
+            del currentBeatSets[removeCBS]
+            del currentBeatLists[removeCBS]
+    return tVals,vVals,cells,beatLists
+
+#cluster based synchrony
 def calcTimeSync(vVal,vTime,nextBeatDist=3,M=True):
     tVals = np.concatenate(tuple(arr for col in vTime for arr in col))
     vVals = np.concatenate(tuple(arr for col in vVal for arr in col))
@@ -105,13 +154,13 @@ def calcTimeSync(vVal,vTime,nextBeatDist=3,M=True):
             currentBeatSets[ML[0]].add(cell)
             currentBeatLists[ML[0]].append(i)
         else:
-            currentBeatSets.append(set([cell])) 
+            currentBeatSets.append(set([cell]))
             currentBeatLists.append([i])
         if removeCBS is not None:
             beatLists.append(currentBeatLists[removeCBS])
             del currentBeatSets[removeCBS]
             del currentBeatLists[removeCBS]
-            
+
     syncT = []
     syncV = []
     times = []
@@ -140,7 +189,8 @@ def calcTimeSync(vVal,vTime,nextBeatDist=3,M=True):
     syncV[zs] = np.inf
     syncV[zs] = syncV.min()
     return times,syncT**-1,syncV**-1
-    
+
+#single beat set synchrony
 def calcSyncVarLen(vVal,vTime,M=True):
     tVals = np.concatenate(tuple(arr for col in vTime for arr in col))
     vVals = np.concatenate(tuple(arr for col in vVal for arr in col))
@@ -162,7 +212,7 @@ def calcSyncVarLen(vVal,vTime,M=True):
         for rn,arr in enumerate(col):
             cells += [(rn,cn)]*len(arr)
     cells = [cells[ind] for ind in sortedPos]
-    
+
     syncT = []
     syncV = []
     times = []
@@ -190,4 +240,3 @@ def calcSyncVarLen(vVal,vTime,M=True):
     syncV[zs] = np.inf
     syncV[zs] = syncV.min()
     return times, syncT**-1, syncV**-1
-        

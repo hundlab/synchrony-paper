@@ -14,12 +14,12 @@ import matplotlib.pyplot as plt
 from calcSync import calcTimeSync, calcSyncVarLen
 import xml.etree.ElementTree as ET
 
-pvars = list(readFile('/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormal/0/cell_0_0_dss0_pvars.tsv').keys())
+pvars = list(readFile('D:/synchrony-data/2SAN1RandLogNormal/0/cell_0_0_dss0_pvars.tsv').keys())
 pvars.append('cond')
-#datadir = '/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormal/'
-#datadir = '/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormalT2_038/'
-#datadir = '/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormalT4_0038/'
-datadir = '/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormalManyCond/'
+#datadir = 'D:/synchrony-data/2SAN1RandLogNormal/'
+#datadir = 'D:/synchrony-data/2SAN1RandLogNormalT2_038/'
+#datadir = 'D:/synchrony-data/2SAN1RandLogNormalT4_0038/'
+datadir = 'D:/synchrony-data/2SAN1RandLogNormalManyCond/'
 filesPvars = glob(datadir+'*/*_pvars.tsv')
 numData = len(filesPvars)//2
 pvarsVals = np.zeros((2,numData,len(pvars)))
@@ -36,6 +36,7 @@ def getCond(file):
     return float(cond)
 
 for file in filesPvars:
+    file = file.replace('\\','/')
     temp = readFile(file)
     fnames = s.split(file)
     uparts = u.split(fnames[-1])
@@ -51,6 +52,7 @@ props = ['vOld/peak','vOld/cl','vOld/min','vOld/maxt','caI/peak','caI/min','vOld
 filesProps = glob(datadir+'*/*dss0.tsv')
 propsVals = np.zeros((2,numData,len(props)))
 for file in filesProps:
+    file = file.replace('\\','/')
     temp = readFile(file)
     fnames = s.split(file)
     uparts = u.split(fnames[-1])
@@ -72,6 +74,7 @@ filesProps = glob(datadir+'*/*dt0.tsv')
 dtPropsVals = np.zeros((1,2,numData,2),dtype='object')
 bad = set()
 for file in filesProps:
+    file = file.replace('\\','/')
     temp = readFile(file)
     fnames = s.split(file)
     uparts = u.split(fnames[-1])

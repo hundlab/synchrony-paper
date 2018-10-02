@@ -10,12 +10,12 @@ import PyLongQt as pylqt
 from multiprocessing import Pool
 settings = pylqt.Misc.SettingsIO.getInstance()
 proto = pylqt.Protocols.GridProtocol()
-settings.readSettings(proto,'/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormal.xml')
+settings.readSettings(proto,'D:/synchrony-data/2SAN1RandLogNormal.xml')
 lastProto = settings.lastProto.clone()
 def runSim(num):
     proto = lastProto.clone()
     proto.pvars.calcIonChanParams()
-    proto.setDataDir('/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormal/'+str(num))
+    proto.setDataDir('D:/synchrony-data/2SAN1RandLogNormal/'+str(num))
     proto.runSim()
     settings.writeSettings(proto,proto.datadir+'/'+proto.simvarfile)
     return num

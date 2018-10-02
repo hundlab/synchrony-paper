@@ -13,11 +13,11 @@ from ParameterSensitivity import ParamSensetivity
 import matplotlib.pyplot as plt
 from calcSync import calcTimeSync, calcSyncVarLen
 
-pvars = list(readFile('/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormal/0/cell_0_0_dss0_pvars.tsv').keys())
-#datadir = '/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormal/'
-datadir = '/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormalT3_0038/'
-#datadir = '/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormal_00038/'
-#datadir = '/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormalManyCond/'
+pvars = list(readFile('D:/synchrony-data/2SAN1RandLogNormal/0/cell_0_0_dss0_pvars.tsv').keys())
+#datadir = 'D:/synchrony-data/2SAN1RandLogNormal/'
+datadir = 'D:/synchrony-data/2SAN1RandLogNormalT3_0038/'
+#datadir = 'D:/synchrony-data/2SAN1RandLogNormal_00038/'
+#datadir = 'D:/synchrony-data/2SAN1RandLogNormalManyCond/'
 filesPvars = glob(datadir+'*/*_pvars.tsv')
 numData = len(filesPvars)//2
 pvarsVals = np.zeros((2,numData,len(pvars)))
@@ -25,6 +25,7 @@ s = re.compile('/')
 u = re.compile('_')
 
 for file in filesPvars:
+    file = file.replace('\\','/')
     temp = readFile(file)
     fnames = s.split(file)
     uparts = u.split(fnames[-1])
@@ -38,6 +39,7 @@ props = ['vOld/peak','vOld/cl','vOld/min','caI/peak','caI/min',
 filesProps = glob(datadir+'*/*dss0.tsv')
 propsVals = np.zeros((2,numData,len(props)))
 for file in filesProps:
+    file = file.replace('\\','/')
     temp = readFile(file)
     fnames = s.split(file)
     uparts = u.split(fnames[-1])
@@ -59,6 +61,7 @@ filesProps = glob(datadir+'*/*dt0.tsv')
 dtPropsVals = np.zeros((1,2,numData,2),dtype='object')
 bad = set()
 for file in filesProps:
+    file = file.replace('\\','/')
     temp = readFile(file)
     fnames = s.split(file)
     uparts = u.split(fnames[-1])

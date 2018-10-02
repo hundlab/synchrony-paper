@@ -12,8 +12,8 @@ import re
 from ParameterSensitivity import ParamSensetivity
 import matplotlib.pyplot as plt
 
-pvars = list(readFile('/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormal/0/cell_0_0_dss0_pvars.tsv').keys())
-datadir = '/home/dgratz/development/synchrony-paper/data/600Sims1CellRand/'
+pvars = list(readFile('D:/synchrony-data/2SAN1RandLogNormal/0/cell_0_0_dss0_pvars.tsv').keys())
+datadir = 'D:/synchrony-data/600Sims1CellRand/'
 
 filesPvars = glob(datadir+'*/*_pvars.tsv')
 numData = len(filesPvars)
@@ -22,6 +22,7 @@ s = re.compile('/')
 u = re.compile('_')
 
 for file in filesPvars:
+    file = file.replace('\\','/')
     temp = readFile(file)
     fnames = s.split(file)
     num = int(fnames[-2])
@@ -33,6 +34,7 @@ props = ['vOld/peak','vOld/cl','vOld/min','caI/peak','caI/min',
 filesProps = glob(datadir+'*/dss0.tsv')
 propsVals = np.zeros((numData,len(props)))
 for file in filesProps:
+    file = file.replace('\\','/')
     temp = readFile(file)
     fnames = s.split(file)
     num = int(fnames[-2])
@@ -42,6 +44,7 @@ for file in filesProps:
 filesProps = glob(datadir+'*/dt0.tsv')
 bad = set()
 for file in filesProps:
+    file = file.replace('\\','/')
     temp = readFile(file)
     fnames = s.split(file)
     num = int(fnames[-2])

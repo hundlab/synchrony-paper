@@ -11,7 +11,7 @@ import PyLongQt as pylqt
 def testFactors(val,num=20):
     settings = pylqt.Misc.SettingsIO.getInstance()
     proto = pylqt.Protocols.GridProtocol()
-    settings.readSettings(proto,'/home/dgratz/development/synchrony-paper/data/ela7x7NoConn.xml')
+    settings.readSettings(proto,'D:/synchrony-data/ela7x7NoConn.xml')
     lastProto = settings.lastProto.clone()
     lastProto.pvars.calcIonChanParams()
     for row in lastProto.grid:
@@ -21,7 +21,7 @@ def testFactors(val,num=20):
     for n in range(num):
         proto = lastProto.clone()
         proto.pvars.calcIonChanParams()
-        proto.setDataDir('/home/dgratz/development/synchrony-paper/data/ManyParams_'+str(val)+'/'+str(n))
+        proto.setDataDir('D:/synchrony-data/ManyParams_'+str(val)+'/'+str(n))
         print(n)
         proto.runSim()
         settings.writeSettings(proto,proto.datadir+'/'+proto.simvarfile)

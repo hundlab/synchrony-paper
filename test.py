@@ -12,10 +12,10 @@ import matplotlib.pyplot as plt
 import numpy as np
 from scipy import signal
 
-folder = '/home/dgratz/development/synchrony-paper/data/AllConnLogNormal/0.38/'
-#folder = '/home/dgratz/development/synchrony-paper/data/ManyParamsLogNormal/data0.0038_20/'
-#folder = '/home/dgratz/development/synchrony-paper/data/AllConnLogNormal/0.0/'
-plt.figure()
+#folder = 'D:/synchrony-data/AllConnLogNormal/0.38/'
+#folder = 'D:/synchrony-data/ManyParamsLogNormal/data0.0038_20/'
+folder = 'D:/synchrony-data/AllConnLogNormal/0.0/'
+plt.figure(1)
 plt.subplot(3,1,1)
 b2bSTimes,b2bST,b2bSV=b2bSync(folder+'/',3)
 b2bCLX, b2bCLY = b2bCL(folder)

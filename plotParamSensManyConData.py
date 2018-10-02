@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 from calcSync import calcTimeSync, calcSyncVarLen
 
 cons = np.logspace(-4,-1,10)*3.87138
-pvars = list(readFile('/home/dgratz/development/synchrony-paper/data/2SAN1RandLogNormal/0/cell_0_0_dss0_pvars.tsv').keys())
-datadir = '/home/dgratz/development/synchrony-paper/data/600Sims10Conns1Rand/'
+pvars = list(readFile('D:/synchrony-data/2SAN1RandLogNormal/0/cell_0_0_dss0_pvars.tsv').keys())
+datadir = 'D:/synchrony-data/600Sims10Conns1Rand/'
 
 filesPvars = glob(datadir+'*/*_pvars.tsv')
 numData = 616

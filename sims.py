@@ -2,8 +2,8 @@
 import PyLongQt
 proto = PyLongQt.protoMap['Grid Protocol']()
 settings = PyLongQt.Misc.SettingsIO.getInstance()
-settings.readSettings(proto,'/home/dgratz/development/synchrony-paper/data/1KurataRandom_1OnalAtrial.xml')
-proto.setDataDir('/home/dgratz/development/synchrony-paper'+'/data/1KurataRandom_1OnalAtrial')
+settings.readSettings(proto,'D:/synchrony-data/1KurataRandom_1OnalAtrial.xml')
+proto.setDataDir('D:/synchrony-data/data/1KurataRandom_1OnalAtrial')
 for i in range(400,500):
     simProto = proto.clone()
     simProto.setDataDir(simProto.datadir+'/'+str(i))

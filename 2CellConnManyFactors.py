@@ -11,7 +11,7 @@ import numpy as np
 
 settings = pylqt.Misc.SettingsIO.getInstance()
 proto = pylqt.Protocols.GridProtocol()
-settings.readSettings(proto,'/home/dgratz/development/synchrony-paper/data/2Kurata_oneRandom.xml')
+settings.readSettings(proto,'D:/synchrony-data/2Kurata_oneRandom.xml')
 lastProto = settings.lastProto.clone()
 connVals = np.zeros(26)
 connVals[1:] = np.logspace(-4,0,25)*lastProto.grid[0,0].getCondConst(pylqt.Side.right)
@@ -20,7 +20,7 @@ for counter in range(20):
     for val in connVals:
         lastProto.grid[0,0].setCondConst(0.05,pylqt.Side.right,False,val)
         proto = lastProto.clone()
-        proto.setDataDir('/home/dgratz/development/synchrony-paper/data/AllConnAndRand/'+str(counter)+'/'+str(val))
+        proto.setDataDir('D:/synchrony-data/AllConnAndRand/'+str(counter)+'/'+str(val))
         print(val,proto.pvars['itoFactor'].cells)
         proto.runSim()
         settings.writeSettings(proto,proto.datadir+'/'+proto.simvarfile)
